@@ -5,6 +5,7 @@ import br.com.med.voll.api.domain.Medico;
 import br.com.med.voll.api.dto.MedicoDto;
 import br.com.med.voll.api.repository.MedicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,6 +17,7 @@ public class MedicoController {
 
     @PostMapping
     @CrossOrigin
+    @Transactional
     public void cadastrar(@RequestBody MedicoDto dadosMedico){
         medicoRepository.save(new Medico(dadosMedico));
     }

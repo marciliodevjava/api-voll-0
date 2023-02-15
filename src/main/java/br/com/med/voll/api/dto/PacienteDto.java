@@ -15,7 +15,7 @@ public record PacienteDto(
         @NotBlank(message = "Telefone está incorreto.")
         String telefone,
         @NotBlank(message = "Cpf está incorreto.")
-                @Pattern(regexp = "\\d{11}")
+                @Pattern(regexp = "\\d{3}\\.?\\d{3}\\.?\\d{3}\\-?\\d{2}")
         String cpf,
         @NotNull @Valid
         EnderecoDto endereco) {

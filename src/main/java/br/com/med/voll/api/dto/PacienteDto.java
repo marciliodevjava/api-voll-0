@@ -1,4 +1,22 @@
 package br.com.med.voll.api.dto;
 
-public record PacienteDto(String nome, String email, String telefone, String cpf, EnderecoDto endereco) {
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+
+public record PacienteDto(
+        @NotBlank(message = "Nome está incorreto.")
+        String nome,
+        @NotBlank
+        @Email(message = "E-mail está incorreto.")
+        String email,
+        @NotBlank(message = "Telefone está incorreto.")
+        String telefone,
+        @NotBlank(message = "Cpf está incorreto.")
+                @Pattern(regexp = "\\d{11}")
+        String cpf,
+        @NotNull @Valid
+        EnderecoDto endereco) {
 }

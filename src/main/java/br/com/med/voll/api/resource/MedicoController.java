@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +34,7 @@ public class MedicoController {
 
     @GetMapping("/listar")
     @CrossOrigin
-    public ResponseEntity<Page<ListagemMedicosDto>> listar(Pageable paginacao){
+    public ResponseEntity<Page<ListagemMedicosDto>> listar(@PageableDefault(size = 10, sort = "nome") Pageable paginacao){
         Page<ListagemMedicosDto> retorno = medicoRepository.findAll(paginacao).map(ListagemMedicosDto::new);
         return ResponseEntity.ok(retorno);
     }

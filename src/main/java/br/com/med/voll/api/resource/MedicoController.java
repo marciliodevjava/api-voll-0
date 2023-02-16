@@ -7,6 +7,8 @@ import br.com.med.voll.api.dto.MedicoDto;
 import br.com.med.voll.api.repository.MedicoRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,8 +33,8 @@ public class MedicoController {
 
     @GetMapping("/listar")
     @CrossOrigin
-    public ResponseEntity<List<ListagemMedicosDto>> listar(){
-        List<ListagemMedicosDto> retorno = medicoRepository.findAll().stream().map(ListagemMedicosDto::new).toList();
+    public ResponseEntity<Page<ListagemMedicosDto>> listar(Pageable paginacao){
+        Page<ListagemMedicosDto> retorno = medicoRepository.findAll(paginacao).map(ListagemMedicosDto::new);
         return ResponseEntity.ok(retorno);
     }
 

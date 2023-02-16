@@ -34,7 +34,7 @@ public class MedicoController {
 
     @GetMapping("/listar")
     @CrossOrigin
-    public ResponseEntity<Page<ListagemMedicosDto>> listar(@PageableDefault(size = 10, sort = "nome") Pageable paginacao){
+    public ResponseEntity<Page<ListagemMedicosDto>> listar(@PageableDefault(size = 10, sort = "nome", page = 0) Pageable paginacao){
         Page<ListagemMedicosDto> retorno = medicoRepository.findAll(paginacao).map(ListagemMedicosDto::new);
         return ResponseEntity.ok(retorno);
     }

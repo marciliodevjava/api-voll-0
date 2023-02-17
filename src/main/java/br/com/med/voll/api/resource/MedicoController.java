@@ -49,6 +49,14 @@ public class MedicoController {
         medico.atualizarInformacoes(medicoAtualizarDto);
         return ResponseEntity.ok(medicoAtualizarDto);
     }
+
+    @DeleteMapping("/excluir/{id}")
+    @Transactional
+    @CrossOrigin
+    public ResponseEntity<?> excluir(@PathVariable Long id){
+        medicoRepository.deleteById(id);
+        return ResponseEntity.ok("Médico: " + id + " deletado");
+    }
     @GetMapping
     @CrossOrigin
     public String status(){

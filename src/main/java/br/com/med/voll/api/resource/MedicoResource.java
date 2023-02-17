@@ -23,7 +23,7 @@ public class MedicoResource {
     @PostMapping("/cadastro")
     @CrossOrigin
     @Transactional
-    public ResponseEntity<?> cadastrar(@RequestBody @Valid MedicoDto dadosMedico, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<DadosDetalhamentoMedico> cadastrar(@RequestBody @Valid MedicoDto dadosMedico, UriComponentsBuilder uriBuilder){
        Medico medico = medicoRepository.save(new Medico(dadosMedico));
        var uri = uriBuilder.path("/medicos/{id}").buildAndExpand(medico.getId()).toUri();
        return ResponseEntity.created(uri).body(new DadosDetalhamentoMedico(medico));
@@ -39,7 +39,7 @@ public class MedicoResource {
     @PutMapping("/atualizar")
     @Transactional
     @CrossOrigin
-    public ResponseEntity<?> atualizar(@RequestBody @Valid MedicoAtualizarDto medicoAtualizarDto){
+    public ResponseEntity<DadosDetalhamentoMedico> atualizar(@RequestBody @Valid MedicoAtualizarDto medicoAtualizarDto){
         var medico = medicoRepository.getReferenceById(medicoAtualizarDto.id());
         medico.atualizarInformacoes(medicoAtualizarDto);
         return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
@@ -73,7 +73,7 @@ public class MedicoResource {
 
     @GetMapping("{id}")
     @CrossOrigin
-    public ResponseEntity<?> trazerMedicoDados(@PathVariable Long id){
+    public ResponseEntity<MedicoRetornoDto> trazerMedicoDados(@PathVariable Long id){
         Medico medico = medicoRepository.getReferenceById(id);
         return  ResponseEntity.ok(new MedicoRetornoDto(medico));
     }

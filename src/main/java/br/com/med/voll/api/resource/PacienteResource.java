@@ -28,7 +28,7 @@ public class PacienteResource {
     @PostMapping
     @CrossOrigin
     @Transactional
-    public ResponseEntity<?> cadastra(@RequestBody @Valid PacienteDto dados, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<PacienteRetornoCriadoDto> cadastra(@RequestBody @Valid PacienteDto dados, UriComponentsBuilder uriBuilder){
         Paciente retorno = pacienteRepository.save(new Paciente(dados));
         var uri = uriBuilder.path("/pacientes/{id}").buildAndExpand(retorno.getId()).toUri();
         return ResponseEntity.created(uri).body(new PacienteRetornoCriadoDto(retorno));
@@ -61,7 +61,7 @@ public class PacienteResource {
 
     @GetMapping("{id}")
     @CrossOrigin
-    public ResponseEntity<?> trazerDados(@PathVariable Long id){
+    public ResponseEntity<PacienteRetornoDto> trazerDados(@PathVariable Long id){
         Paciente paciente = pacienteRepository.getReferenceById(id);
         return ResponseEntity.ok(new PacienteRetornoDto(paciente));
     }

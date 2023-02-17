@@ -44,6 +44,15 @@ public class PacienteController {
         return ResponseEntity.ok("Paciente: " + id + " deletado.");
     }
 
+    @GetMapping("/ativar/{id}")
+    @Transactional
+    @CrossOrigin
+    public ResponseEntity<?> ativarPaciente(@PathVariable Long id){
+        var paciente = pacienteRepository.getReferenceById(id);
+        paciente.ativar();
+        return ResponseEntity.ok("Paciente: " + id + " ativado.");
+    }
+
     @GetMapping
     @CrossOrigin
     public String status(){

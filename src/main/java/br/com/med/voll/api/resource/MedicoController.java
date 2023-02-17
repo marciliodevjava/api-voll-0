@@ -66,6 +66,16 @@ public class MedicoController {
         medico.excluir();
         return ResponseEntity.ok("Médico: " + id + " deletado");
     }
+
+    @GetMapping("/ativar/{id}")
+    @Transactional
+    @CrossOrigin
+    public ResponseEntity<?> ativar(@PathVariable Long id){
+        Medico medico = medicoRepository.getReferenceById(id);
+        medico.ativar();
+        return ResponseEntity.ok("Médico: " + id + " Ativado.");
+    }
+
     @GetMapping
     @CrossOrigin
     public String status(){

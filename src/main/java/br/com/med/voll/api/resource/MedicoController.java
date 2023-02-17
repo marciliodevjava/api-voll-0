@@ -37,7 +37,7 @@ public class MedicoController {
     @GetMapping("/listar")
     @CrossOrigin
     public ResponseEntity<Page<ListagemMedicosDto>> listar(@PageableDefault(size = 10, sort = "nome", page = 0) Pageable paginacao){
-        Page<ListagemMedicosDto> retorno = medicoRepository.findAll(paginacao).map(ListagemMedicosDto::new);
+        Page<ListagemMedicosDto> retorno = medicoRepository.findAllByAtivoTrue(paginacao).map(ListagemMedicosDto::new);
         return ResponseEntity.ok(retorno);
     }
 
@@ -50,11 +50,20 @@ public class MedicoController {
         return ResponseEntity.ok(medicoAtualizarDto);
     }
 
-    @DeleteMapping("/excluir/{id}")
+    @DeleteMapping("/excluir/real/{id}")
     @Transactional
     @CrossOrigin
     public ResponseEntity<?> excluir(@PathVariable Long id){
         medicoRepository.deleteById(id);
+        return ResponseEntity.ok("Médico: " + id + " deletado");
+    }
+
+    @DeleteMapping("/excluir/{id}")
+    @Transactional
+    @CrossOrigin
+    public ResponseEntity<?> excluirLogico(@PathVariable Long id){
+        Medico medico = medicoRepository.getReferenceById(id);
+        medico.excluir();
         return ResponseEntity.ok("Médico: " + id + " deletado");
     }
     @GetMapping

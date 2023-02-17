@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "hello")
-public class HelloController {
+public class HelloResource {
 
 
     @GetMapping

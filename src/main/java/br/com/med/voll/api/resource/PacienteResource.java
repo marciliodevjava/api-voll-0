@@ -1,8 +1,6 @@
 package br.com.med.voll.api.resource;
 
-import br.com.med.voll.api.domain.Medico;
 import br.com.med.voll.api.domain.Paciente;
-import br.com.med.voll.api.dto.MedicoRetornoDto;
 import br.com.med.voll.api.dto.PacienteDto;
 import br.com.med.voll.api.dto.PacienteRetornoCriadoDto;
 import br.com.med.voll.api.dto.PacienteRetornoDto;
@@ -20,7 +18,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("paciente")
-public class PacienteController {
+public class PacienteResource {
 
     @Autowired
     private PacienteRepository pacienteRepository;

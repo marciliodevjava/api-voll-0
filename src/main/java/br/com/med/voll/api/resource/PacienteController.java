@@ -1,9 +1,12 @@
 package br.com.med.voll.api.resource;
 
+import br.com.med.voll.api.domain.Medico;
 import br.com.med.voll.api.domain.Paciente;
+import br.com.med.voll.api.dto.MedicoRetornoDto;
 import br.com.med.voll.api.dto.PacienteDto;
 import br.com.med.voll.api.dto.PacienteRetornoCriadoDto;
 import br.com.med.voll.api.dto.PacienteRetornoDto;
+import br.com.med.voll.api.repository.MedicoRepository;
 import br.com.med.voll.api.repository.PacienteRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,8 @@ public class PacienteController {
 
     @Autowired
     private PacienteRepository pacienteRepository;
+    @Autowired
+    private MedicoRepository medicoRepository;
 
     @PostMapping
     @CrossOrigin
@@ -54,6 +59,13 @@ public class PacienteController {
         var paciente = pacienteRepository.getReferenceById(id);
         paciente.ativar();
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("{id}")
+    @CrossOrigin
+    public ResponseEntity<?> trazerDados(@PathVariable Long id){
+        Paciente paciente = pacienteRepository.getReferenceById(id);
+        return ResponseEntity.ok(new PacienteRetornoDto(paciente));
     }
 
     @GetMapping

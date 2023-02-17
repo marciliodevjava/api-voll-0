@@ -2,10 +2,7 @@ package br.com.med.voll.api.resource;
 
 import br.com.med.voll.api.domain.Endereco;
 import br.com.med.voll.api.domain.Medico;
-import br.com.med.voll.api.dto.DadosDetalhamentoMedico;
-import br.com.med.voll.api.dto.ListagemMedicosDto;
-import br.com.med.voll.api.dto.MedicoAtualizarDto;
-import br.com.med.voll.api.dto.MedicoDto;
+import br.com.med.voll.api.dto.*;
 import br.com.med.voll.api.repository.MedicoRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,6 +74,13 @@ public class MedicoController {
         Medico medico = medicoRepository.getReferenceById(id);
         medico.ativar();
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("{id}")
+    @CrossOrigin
+    public ResponseEntity<?> trazerMedicoDados(@PathVariable Long id){
+        Medico medico = medicoRepository.getReferenceById(id);
+        return  ResponseEntity.ok(new MedicoRetornoDto(medico));
     }
 
     @GetMapping

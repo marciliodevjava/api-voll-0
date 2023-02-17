@@ -31,8 +31,17 @@ public class PacienteController {
     @GetMapping("/listar")
     @CrossOrigin
     public ResponseEntity<Page<PacienteRetornoDto>> listPaciente(@PageableDefault(size = 10, page = 0, sort = "name") Pageable paginacao){
-        Page<PacienteRetornoDto> dados = pacienteRepository.findAll(paginacao).map(PacienteRetornoDto::new);
+        Page<PacienteRetornoDto> dados = pacienteRepository.findAllByAtivoTrue(paginacao).map(PacienteRetornoDto::new);
         return ResponseEntity.ok(dados);
+    }
+
+    @DeleteMapping("/excluir/{id}")
+    @Transactional
+    @CrossOrigin
+    public ResponseEntity<?> excluir(@PathVariable Long id){
+        var paciente = pacienteRepository.getReferenceById(id);
+        paciente.excluir();
+        return ResponseEntity.ok("Paciente: " + id + " deletado.");
     }
 
     @GetMapping

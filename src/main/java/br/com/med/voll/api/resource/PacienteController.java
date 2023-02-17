@@ -41,7 +41,7 @@ public class PacienteController {
     public ResponseEntity<?> excluir(@PathVariable Long id){
         var paciente = pacienteRepository.getReferenceById(id);
         paciente.excluir();
-        return ResponseEntity.ok("Paciente: " + id + " deletado.");
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/ativar/{id}")

@@ -2,6 +2,7 @@ package br.com.med.voll.api.resource;
 
 import br.com.med.voll.api.domain.Endereco;
 import br.com.med.voll.api.domain.Medico;
+import br.com.med.voll.api.dto.DadosDetalhamentoMedico;
 import br.com.med.voll.api.dto.ListagemMedicosDto;
 import br.com.med.voll.api.dto.MedicoAtualizarDto;
 import br.com.med.voll.api.dto.MedicoDto;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,9 +31,10 @@ public class MedicoController {
     @PostMapping("/cadastro")
     @CrossOrigin
     @Transactional
-    public ResponseEntity<MedicoDto> cadastrar(@RequestBody @Valid MedicoDto dadosMedico){
+    public ResponseEntity<?> cadastrar(@RequestBody @Valid MedicoDto dadosMedico, UriComponentsBuilder uriBuilder){
        Medico medico = medicoRepository.save(new Medico(dadosMedico));
-       return ResponseEntity.ok(dadosMedico);
+       var uri = uriBuilder.path("/medicos/{id}").buildAndExpand(medico.getId()).toUri();
+       return ResponseEntity.created(uri).body(new DadosDetalhamentoMedico(medico));
     }
 
     @GetMapping("/listar")
@@ -44,10 +47,10 @@ public class MedicoController {
     @PutMapping("/atualizar")
     @Transactional
     @CrossOrigin
-    public ResponseEntity<MedicoAtualizarDto> atualizar(@RequestBody @Valid MedicoAtualizarDto medicoAtualizarDto){
-        Medico medico = medicoRepository.getReferenceById(medicoAtualizarDto.id());
+    public ResponseEntity<?> atualizar(@RequestBody @Valid MedicoAtualizarDto medicoAtualizarDto){
+        var medico = medicoRepository.getReferenceById(medicoAtualizarDto.id());
         medico.atualizarInformacoes(medicoAtualizarDto);
-        return ResponseEntity.ok(medicoAtualizarDto);
+        return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
     }
 
     @DeleteMapping("/excluir/real/{id}")
@@ -64,7 +67,7 @@ public class MedicoController {
     public ResponseEntity<?> excluirLogico(@PathVariable Long id){
         Medico medico = medicoRepository.getReferenceById(id);
         medico.excluir();
-        return ResponseEntity.ok("Médico: " + id + " deletado");
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/ativar/{id}")
@@ -73,7 +76,7 @@ public class MedicoController {
     public ResponseEntity<?> ativar(@PathVariable Long id){
         Medico medico = medicoRepository.getReferenceById(id);
         medico.ativar();
-        return ResponseEntity.ok("Médico: " + id + " Ativado.");
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping

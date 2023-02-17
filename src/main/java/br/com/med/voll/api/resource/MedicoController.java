@@ -3,6 +3,7 @@ package br.com.med.voll.api.resource;
 import br.com.med.voll.api.domain.Endereco;
 import br.com.med.voll.api.domain.Medico;
 import br.com.med.voll.api.dto.ListagemMedicosDto;
+import br.com.med.voll.api.dto.MedicoAtualizarDto;
 import br.com.med.voll.api.dto.MedicoDto;
 import br.com.med.voll.api.repository.MedicoRepository;
 import jakarta.validation.Valid;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("medico")
@@ -39,6 +41,14 @@ public class MedicoController {
         return ResponseEntity.ok(retorno);
     }
 
+    @PutMapping("/atualizar")
+    @Transactional
+    @CrossOrigin
+    public ResponseEntity<MedicoAtualizarDto> atualizar(@RequestBody @Valid MedicoAtualizarDto medicoAtualizarDto){
+        Medico medico = medicoRepository.getReferenceById(medicoAtualizarDto.id());
+        medico.atualizarInformacoes(medicoAtualizarDto);
+        return ResponseEntity.ok(medicoAtualizarDto);
+    }
     @GetMapping
     @CrossOrigin
     public String status(){

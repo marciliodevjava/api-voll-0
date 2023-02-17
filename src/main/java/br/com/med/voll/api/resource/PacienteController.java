@@ -34,6 +34,7 @@ public class PacienteController {
         Page<PacienteRetornoDto> dados = pacienteRepository.findAll(paginacao).map(PacienteRetornoDto::new);
         return ResponseEntity.ok(dados);
     }
+
     @GetMapping
     @CrossOrigin
     public String status(){

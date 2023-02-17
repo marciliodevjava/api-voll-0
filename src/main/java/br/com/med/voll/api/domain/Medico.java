@@ -1,5 +1,6 @@
 package br.com.med.voll.api.domain;
 
+import br.com.med.voll.api.dto.MedicoAtualizarDto;
 import br.com.med.voll.api.dto.MedicoDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -33,5 +34,17 @@ public class Medico {
         this.crm = dados.crm();
         this.especialidade = dados.especialidade();
         this.endereco = new Endereco(dados.endereco());
+    }
+
+    public void atualizarInformacoes(MedicoAtualizarDto medicoAtualizarDto){
+        if (medicoAtualizarDto.nome()!= null){
+            this.nome = medicoAtualizarDto.nome();
+        }
+        if(medicoAtualizarDto.telefone() != null){
+            this.telefone = medicoAtualizarDto.telefone();
+        }
+        if (medicoAtualizarDto.enderecoDto() != null) {
+            this.endereco.atualizarInformacoes(new Endereco(medicoAtualizarDto.enderecoDto()));
+        }
     }
 }

@@ -15,7 +15,7 @@ public record MedicoDto(
         String email,
         @NotBlank
         String telefone,
-        @NotBlank(message = "E-mail está incorreto.")
+        @NotBlank(message = "CRM está incorreto.")
                 @Pattern(regexp = "\\d{4,6}")
         String crm,
         @NotNull(message = "Especialidade está incorreto.")

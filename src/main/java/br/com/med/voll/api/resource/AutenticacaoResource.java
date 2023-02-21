@@ -32,7 +32,7 @@ public class AutenticacaoResource {
         Authentication authentication = authenticationManager.authenticate(token);
 
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Token: " + authentication);
     }
 
     @PostMapping("/cadastrar")

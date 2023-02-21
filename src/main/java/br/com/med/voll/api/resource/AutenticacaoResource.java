@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,8 +28,8 @@ public class AutenticacaoResource {
     @Transactional
     @CrossOrigin
     public ResponseEntity<?> login(@RequestBody @Valid LoginDto loginDto){
-        var token = new UsernamePasswordAuthenticationToken(loginDto.login(), loginDto.senha());
-        var authentication = authenticationManager.authenticate(token);
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginDto.login(), loginDto.senha());
+        Authentication authentication = authenticationManager.authenticate(token);
 
 
         return ResponseEntity.ok().build();

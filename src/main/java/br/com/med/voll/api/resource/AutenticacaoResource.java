@@ -2,7 +2,9 @@ package br.com.med.voll.api.resource;
 
 import br.com.med.voll.api.domain.usuario.Usuario;
 import br.com.med.voll.api.dto.LoginDto;
+import br.com.med.voll.api.dto.TokemDadosJWT;
 import br.com.med.voll.api.dto.UsuarioCadastroDto;
+import br.com.med.voll.api.infra.security.TokenService;
 import br.com.med.voll.api.repository.UsuarioRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 @RestController
 @RequestMapping("/login")
@@ -23,6 +27,9 @@ public class AutenticacaoResource {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private TokenService tokenService;
+
 
     @PostMapping
     @Transactional
@@ -31,8 +38,8 @@ public class AutenticacaoResource {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginDto.login(), loginDto.senha());
         Authentication authentication = authenticationManager.authenticate(token);
 
-
-        return ResponseEntity.ok("Token: " + authentication);
+        String tokemGerado = tokenService.gerarToken((Usuario)authentication.getPrincipal());
+        return ResponseEntity.ok(new TokemDadosJWT(loginDto.login(), new Date(),tokenService.DataExpiracaoTime(), tokemGerado));
     }
 
     @PostMapping("/cadastrar")

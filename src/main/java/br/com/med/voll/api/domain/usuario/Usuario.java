@@ -1,12 +1,15 @@
 package br.com.med.voll.api.domain.usuario;
 
 import br.com.med.voll.api.dto.LoginDto;
+import br.com.med.voll.api.dto.TokemDadosJWT;
 import br.com.med.voll.api.dto.UsuarioCadastroDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.util.DigestUtils;
 
 import java.util.Collection;
 import java.util.List;
@@ -33,7 +36,7 @@ public class Usuario implements UserDetails {
 
     public Usuario(UsuarioCadastroDto cadastroDto){
         this.login = cadastroDto.login();
-        this.senha = cadastroDto.senha();
+        this.senha = BCrypt.hashpw(cadastroDto.senha(),BCrypt.gensalt());
     }
 
     @Override

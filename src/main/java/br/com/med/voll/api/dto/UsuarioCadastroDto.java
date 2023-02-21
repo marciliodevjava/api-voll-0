@@ -10,6 +10,6 @@ public record UsuarioCadastroDto(
         String login,
         @NotBlank(message = "Informe a senha do usuario, de no minimo 8 digitos a 64 digitos")
         @Pattern(regexp = "\\d{8,24}")
-        String senha
-) {
+        String senha)
+    {
 }

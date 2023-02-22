@@ -31,13 +31,21 @@ public class ConsultaServive {
         if(!medicoRepository.existsById(dados.idMedico())){
             throw new ValidacaoException("Médico informado não existe");
         }
-        if(dados != null && !pacienteRepository.existsById(dados.idPaciente())){
+        if(dados.idMedico() != null && !pacienteRepository.existsById(dados.idPaciente())){
             throw new ValidacaoException("Paciente informado não existe.");
         }
-        Optional<Medico> medico = medicoRepository.findById(dados.idMedico());
-        Optional<Paciente> paciente = pacienteRepository.findById(dados.idPaciente());
-        Consulta consulta = consultaRespository.save(new Consulta(medico.get().getId(), paciente.get().getId(), dados.data()));
-        return new DadosDetalhamentoConsultaDto(consulta.getId(), medico.get().getId()
-                , paciente.get().getId(), dados.data());
+        Medico medico = this.escolhaMedico(dados);
+        Paciente paciente = pacienteRepository.getReferenceById(dados.idPaciente());
+        Consulta consulta = consultaRespository.save(new Consulta(medico.getId(), paciente.getId(), dados.data()));
+        return new DadosDetalhamentoConsultaDto(consulta.getId(), medico.getId()
+                , paciente.getId(), dados.data());
+    }
+
+    private Medico escolhaMedico(DadosConsultasDto dados){
+        if(dados.idMedico() != null) return medicoRepository.getReferenceById(dados.idMedico());
+
+        if(dados.especialidade() == null) throw new ValidacaoException("Especialidade é obrigatória, quando o medico não for escolhido.");
+
+        return medicoRepository.escolherMedicoAlatorio(dados.especialidade(), dados.data());
     }
 }

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping("login")
 public class AutenticacaoResource {
 
     @Autowired

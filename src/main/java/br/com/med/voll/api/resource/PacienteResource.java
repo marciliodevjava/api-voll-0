@@ -16,10 +16,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
+
 @RestController
 @RequestMapping("paciente")
 public class PacienteResource {
 
+    private URI uri;
+    private Paciente paciente;
     @Autowired
     private PacienteRepository pacienteRepository;
     @Autowired
@@ -30,7 +34,7 @@ public class PacienteResource {
     @Transactional
     public ResponseEntity<PacienteRetornoCriadoDto> cadastra(@RequestBody @Valid PacienteDto dados, UriComponentsBuilder uriBuilder){
         Paciente retorno = pacienteRepository.save(new Paciente(dados));
-        var uri = uriBuilder.path("/pacientes/{id}").buildAndExpand(retorno.getId()).toUri();
+        this.uri = uriBuilder.path("/pacientes/{id}").buildAndExpand(retorno.getId()).toUri();
         return ResponseEntity.created(uri).body(new PacienteRetornoCriadoDto(retorno));
     }
 
@@ -45,7 +49,7 @@ public class PacienteResource {
     @Transactional
     @CrossOrigin
     public ResponseEntity<?> excluir(@PathVariable Long id){
-        var paciente = pacienteRepository.getReferenceById(id);
+        this.paciente = pacienteRepository.getReferenceById(id);
         paciente.excluir();
         return ResponseEntity.noContent().build();
     }
@@ -54,7 +58,7 @@ public class PacienteResource {
     @Transactional
     @CrossOrigin
     public ResponseEntity<?> ativarPaciente(@PathVariable Long id){
-        var paciente = pacienteRepository.getReferenceById(id);
+        this.paciente = pacienteRepository.getReferenceById(id);
         paciente.ativar();
         return ResponseEntity.noContent().build();
     }

@@ -1,6 +1,7 @@
 package br.com.med.voll.api.resource;
 
 import br.com.med.voll.api.domain.Medico;
+import br.com.med.voll.api.domain.Paciente;
 import br.com.med.voll.api.dto.*;
 import br.com.med.voll.api.repository.MedicoRepository;
 import jakarta.validation.Valid;
@@ -13,9 +14,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
+
 @RestController
 @RequestMapping("medico")
 public class MedicoResource {
+
+    private URI uri;
+    private Medico medico;
 
     @Autowired
     private MedicoRepository medicoRepository;
@@ -25,7 +31,7 @@ public class MedicoResource {
     @Transactional
     public ResponseEntity<DadosDetalhamentoMedico> cadastrar(@RequestBody @Valid MedicoDto dadosMedico, UriComponentsBuilder uriBuilder){
        Medico medico = medicoRepository.save(new Medico(dadosMedico));
-       var uri = uriBuilder.path("/medicos/{id}").buildAndExpand(medico.getId()).toUri();
+       this.uri = uriBuilder.path("/medicos/{id}").buildAndExpand(medico.getId()).toUri();
        return ResponseEntity.created(uri).body(new DadosDetalhamentoMedico(medico));
     }
 
@@ -41,7 +47,7 @@ public class MedicoResource {
     @Transactional
     @CrossOrigin
     public ResponseEntity<DadosDetalhamentoMedico> atualizar(@RequestBody @Valid MedicoAtualizarDto medicoAtualizarDto){
-        var medico = medicoRepository.getReferenceById(medicoAtualizarDto.id());
+        this.medico = medicoRepository.getReferenceById(medicoAtualizarDto.id());
         medico.atualizarInformacoes(medicoAtualizarDto);
         return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
     }

@@ -35,7 +35,7 @@ public class AutenticacaoResource {
     @PostMapping
     @Transactional
     @CrossOrigin
-    public ResponseEntity<?> login(@RequestBody @Valid LoginDto loginDto){
+    public ResponseEntity<TokemDadosJWT> login(@RequestBody @Valid LoginDto loginDto){
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginDto.login(), loginDto.senha());
         Authentication authentication = authenticationManager.authenticate(token);
 

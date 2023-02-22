@@ -2,6 +2,7 @@ package br.com.med.voll.api.domain.consulta;
 
 import br.com.med.voll.api.domain.Medico;
 import br.com.med.voll.api.domain.Paciente;
+import br.com.med.voll.api.dto.DadosConsultasDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,5 +28,11 @@ public class Consulta {
     private Paciente paciente;
 
     private LocalDateTime data;
+
+    public Consulta(Long idMedico, Long idPaciente, LocalDateTime data){
+        this.medico = new Medico(idMedico);
+        this.paciente = new Paciente(idPaciente);
+        this.data = data;
+    }
 
 }

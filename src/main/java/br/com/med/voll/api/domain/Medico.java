@@ -51,6 +51,10 @@ public class Medico {
         }
     }
 
+    public Medico(Long id){
+        this.id = id;
+    }
+
     public void excluir() {
         this.ativo = false;
     }

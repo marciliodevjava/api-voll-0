@@ -7,9 +7,9 @@ import java.time.LocalDateTime;
 
 public record DadosConsultasDto(
         Long idMedico,
-        @NotNull(message = "Capo obrigatório.")
+        @NotNull(message = "Capo paciente obrigatório.")
         Long idPaciente,
-        @NotNull(message = "Campo obrigatório")
+        @NotNull(message = "Campo data obrigatório")
         @Future
         LocalDateTime data) {
 }

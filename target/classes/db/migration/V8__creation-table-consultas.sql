@@ -9,5 +9,5 @@ create table consultas(
     constraint fk_consultas_medicos_id foreign key(medico_id) references medicos(id),
     constraint fk_consultas_paciente_id foreign key(paciente_id) references pacientes(id)
 
-                      
+
 );

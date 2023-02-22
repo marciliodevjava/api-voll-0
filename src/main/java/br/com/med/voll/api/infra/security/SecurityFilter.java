@@ -11,10 +11,22 @@ import java.io.IOException;
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
 
+    private String tokemJWT;
+    private String authorizationHader;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
+        this.tokemJWT = recuperarToken(request);
+        System.out.println(tokemJWT);
         filterChain.doFilter(request, response);
+    }
+
+    private String recuperarToken(HttpServletRequest request) {
+        this.authorizationHader = request.getHeader("Authorization");
+        if(authorizationHader == null){
+            throw new RuntimeException("Token não enviado, no cabeçalho Authorization!");
+        }
+        return authorizationHader.replace("Bearer ", "");
     }
 }

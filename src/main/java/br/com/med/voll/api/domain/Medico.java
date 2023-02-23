@@ -2,7 +2,6 @@ package br.com.med.voll.api.domain;
 
 import br.com.med.voll.api.dto.MedicoAtualizarDto;
 import br.com.med.voll.api.dto.MedicoDto;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -65,4 +64,5 @@ public class Medico {
     public void ativar() {
         this.ativo = true;
     }
+
 }

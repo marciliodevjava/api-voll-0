@@ -1,7 +1,6 @@
 package br.com.med.voll.api.domain.usuario;
 
 import br.com.med.voll.api.dto.LoginDto;
-import br.com.med.voll.api.dto.TokemDadosJWT;
 import br.com.med.voll.api.dto.UsuarioCadastroDto;
 import jakarta.persistence.*;
 import lombok.*;
@@ -9,7 +8,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.util.DigestUtils;
 
 import java.util.Collection;
 import java.util.List;

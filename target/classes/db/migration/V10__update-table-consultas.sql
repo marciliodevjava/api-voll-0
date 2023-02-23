@@ -1,0 +1,1 @@
+update consultas set status = "CONSULTA_MARCADA";

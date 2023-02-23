@@ -25,7 +25,7 @@ public class SecurityConfigurations {
     private SecurityFilter securityFilter;
 
     @Bean
-    public SecurityFilterChain securityFilterChan(HttpSecurity http) throws Exception{
+    public SecurityFilterChain securityFilterChan(HttpSecurity http) throws Exception {
         return http.csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeHttpRequests()
@@ -37,12 +37,12 @@ public class SecurityConfigurations {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception{
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

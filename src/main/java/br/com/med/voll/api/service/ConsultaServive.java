@@ -3,9 +3,10 @@ package br.com.med.voll.api.service;
 import br.com.med.voll.api.domain.Medico;
 import br.com.med.voll.api.domain.Paciente;
 import br.com.med.voll.api.domain.consulta.Consulta;
+import br.com.med.voll.api.dto.CancelamentoConsutaDto;
+import br.com.med.voll.api.dto.CancelamentoDetalheConsutaDto;
 import br.com.med.voll.api.dto.DadosConsultasDto;
 import br.com.med.voll.api.dto.DadosDetalhamentoConsultaDto;
-import br.com.med.voll.api.dto.DadosDetalhamentoMedico;
 import br.com.med.voll.api.exception.medico.ValidacaoException;
 import br.com.med.voll.api.repository.ConsultaRespository;
 import br.com.med.voll.api.repository.MedicoRepository;
@@ -48,5 +49,21 @@ public class ConsultaServive {
             throw new ValidacaoException("Especialidade é obrigatória, quando o medico não for escolhido.");
 
         return medicoRepository.escolherMedicoAlatorio(dados.especialidade(), dados.data());
+    }
+
+    public CancelamentoDetalheConsutaDto cancelaMentoConsulta(CancelamentoConsutaDto cancelamentoConsutaDto) {
+        if (!consultaRespository.existsById(cancelamentoConsutaDto.idConsulta())) {
+            throw new ValidacaoException("Não é possivel realizar o cancelamento, pois a consulta não existe.");
+        }
+        Consulta consulta = consultaRespository.getReferenceById(cancelamentoConsutaDto.idConsulta());
+        boolean consultaCancelada = consulta.cancelar(cancelamentoConsutaDto.cancelamento());
+        if (consultaCancelada) {
+            System.out.println("Consulta autorizada o cancelamento");
+        } else {
+            throw new ValidacaoException("Cancelamento não Autorizado.");
+        }
+        consulta.excluir(cancelamentoConsutaDto.cancelamento());
+
+        return new CancelamentoDetalheConsutaDto(consulta);
     }
 }

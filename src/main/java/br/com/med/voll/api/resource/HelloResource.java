@@ -9,12 +9,13 @@ public class HelloResource {
 
     @GetMapping
     @CrossOrigin
-    public String olaMundo(){
+    public String olaMundo() {
         return "Hello World! SpringBoot!!!";
     }
+
     @GetMapping("/status")
     @CrossOrigin
-    public String status(){
+    public String status() {
         return "Api Funcionando!";
     }
 }

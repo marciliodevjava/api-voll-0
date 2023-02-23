@@ -29,15 +29,15 @@ public class MedicoResource {
     @PostMapping("/cadastro")
     @CrossOrigin
     @Transactional
-    public ResponseEntity<DadosDetalhamentoMedico> cadastrar(@RequestBody @Valid MedicoDto dadosMedico, UriComponentsBuilder uriBuilder){
-       Medico medico = medicoRepository.save(new Medico(dadosMedico));
-       this.uri = uriBuilder.path("/medicos/{id}").buildAndExpand(medico.getId()).toUri();
-       return ResponseEntity.created(uri).body(new DadosDetalhamentoMedico(medico));
+    public ResponseEntity<DadosDetalhamentoMedico> cadastrar(@RequestBody @Valid MedicoDto dadosMedico, UriComponentsBuilder uriBuilder) {
+        Medico medico = medicoRepository.save(new Medico(dadosMedico));
+        this.uri = uriBuilder.path("/medicos/{id}").buildAndExpand(medico.getId()).toUri();
+        return ResponseEntity.created(uri).body(new DadosDetalhamentoMedico(medico));
     }
 
     @GetMapping("/listar")
     @CrossOrigin
-    public ResponseEntity<Page<ListagemMedicosDto>> listar(@PageableDefault(size = 10, sort = "nome", page = 0) Pageable paginacao){
+    public ResponseEntity<Page<ListagemMedicosDto>> listar(@PageableDefault(size = 10, sort = "nome", page = 0) Pageable paginacao) {
 
         Page<ListagemMedicosDto> retorno = medicoRepository.findAllByAtivoTrue(paginacao).map(ListagemMedicosDto::new);
         return ResponseEntity.ok(retorno);
@@ -46,16 +46,16 @@ public class MedicoResource {
     @PutMapping("/atualizar")
     @Transactional
     @CrossOrigin
-    public ResponseEntity<DadosDetalhamentoMedico> atualizar(@RequestBody @Valid MedicoAtualizarDto medicoAtualizarDto){
+    public ResponseEntity<DadosDetalhamentoMedico> atualizar(@RequestBody @Valid MedicoAtualizarDto medicoAtualizarDto) {
         this.medico = medicoRepository.getReferenceById(medicoAtualizarDto.id());
-        medico.atualizarInformacoes(medicoAtualizarDto);
+        this.medico.atualizarInformacoes(medicoAtualizarDto);
         return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
     }
 
     @DeleteMapping("/excluir/real/{id}")
     @Transactional
     @CrossOrigin
-    public ResponseEntity<?> excluir(@PathVariable Long id){
+    public ResponseEntity<?> excluir(@PathVariable Long id) {
         medicoRepository.deleteById(id);
         return ResponseEntity.ok("Médico: " + id + " deletado");
     }
@@ -63,7 +63,7 @@ public class MedicoResource {
     @DeleteMapping("/excluir/{id}")
     @Transactional
     @CrossOrigin
-    public ResponseEntity<?> excluirLogico(@PathVariable Long id){
+    public ResponseEntity<?> excluirLogico(@PathVariable Long id) {
         Medico medico = medicoRepository.getReferenceById(id);
         medico.excluir();
         return ResponseEntity.noContent().build();
@@ -72,7 +72,7 @@ public class MedicoResource {
     @GetMapping("/ativar/{id}")
     @Transactional
     @CrossOrigin
-    public ResponseEntity<?> ativar(@PathVariable Long id){
+    public ResponseEntity<?> ativar(@PathVariable Long id) {
         Medico medico = medicoRepository.getReferenceById(id);
         medico.ativar();
         return ResponseEntity.noContent().build();
@@ -80,14 +80,14 @@ public class MedicoResource {
 
     @GetMapping("{id}")
     @CrossOrigin
-    public ResponseEntity<MedicoRetornoDto> trazerMedicoDados(@PathVariable Long id){
+    public ResponseEntity<MedicoRetornoDto> trazerMedicoDados(@PathVariable Long id) {
         Medico medico = medicoRepository.getReferenceById(id);
-        return  ResponseEntity.ok(new MedicoRetornoDto(medico));
+        return ResponseEntity.ok(new MedicoRetornoDto(medico));
     }
 
     @GetMapping
     @CrossOrigin
-    public String status(){
+    public String status() {
         return "Api /medicos Funcionando!";
     }
 }

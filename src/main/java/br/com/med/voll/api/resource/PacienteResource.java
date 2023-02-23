@@ -32,7 +32,7 @@ public class PacienteResource {
     @PostMapping
     @CrossOrigin
     @Transactional
-    public ResponseEntity<PacienteRetornoCriadoDto> cadastra(@RequestBody @Valid PacienteDto dados, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<PacienteRetornoCriadoDto> cadastra(@RequestBody @Valid PacienteDto dados, UriComponentsBuilder uriBuilder) {
         Paciente retorno = pacienteRepository.save(new Paciente(dados));
         this.uri = uriBuilder.path("/pacientes/{id}").buildAndExpand(retorno.getId()).toUri();
         return ResponseEntity.created(uri).body(new PacienteRetornoCriadoDto(retorno));
@@ -40,7 +40,7 @@ public class PacienteResource {
 
     @GetMapping("/listar")
     @CrossOrigin
-    public ResponseEntity<Page<PacienteRetornoDto>> listPaciente(@PageableDefault(size = 10, page = 0, sort = "name") Pageable paginacao){
+    public ResponseEntity<Page<PacienteRetornoDto>> listPaciente(@PageableDefault(size = 10, page = 0, sort = "name") Pageable paginacao) {
         Page<PacienteRetornoDto> dados = pacienteRepository.findAllByAtivoTrue(paginacao).map(PacienteRetornoDto::new);
         return ResponseEntity.ok(dados);
     }
@@ -48,7 +48,7 @@ public class PacienteResource {
     @DeleteMapping("/excluir/{id}")
     @Transactional
     @CrossOrigin
-    public ResponseEntity<?> excluir(@PathVariable Long id){
+    public ResponseEntity<?> excluir(@PathVariable Long id) {
         this.paciente = pacienteRepository.getReferenceById(id);
         paciente.excluir();
         return ResponseEntity.noContent().build();
@@ -57,7 +57,7 @@ public class PacienteResource {
     @GetMapping("/ativar/{id}")
     @Transactional
     @CrossOrigin
-    public ResponseEntity<?> ativarPaciente(@PathVariable Long id){
+    public ResponseEntity<?> ativarPaciente(@PathVariable Long id) {
         this.paciente = pacienteRepository.getReferenceById(id);
         paciente.ativar();
         return ResponseEntity.noContent().build();
@@ -65,14 +65,14 @@ public class PacienteResource {
 
     @GetMapping("{id}")
     @CrossOrigin
-    public ResponseEntity<PacienteRetornoDto> trazerDados(@PathVariable Long id){
+    public ResponseEntity<PacienteRetornoDto> trazerDados(@PathVariable Long id) {
         Paciente paciente = pacienteRepository.getReferenceById(id);
         return ResponseEntity.ok(new PacienteRetornoDto(paciente));
     }
 
     @GetMapping
     @CrossOrigin
-    public String status(){
+    public String status() {
         return "Api /paciente Funcionando!";
     }
 }

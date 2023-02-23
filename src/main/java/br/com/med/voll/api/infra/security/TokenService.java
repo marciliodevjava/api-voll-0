@@ -20,7 +20,7 @@ public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
 
-    public String gerarToken(Usuario usuario){
+    public String gerarToken(Usuario usuario) {
         try {
             Algorithm algoritimo = Algorithm.HMAC256(secret);
             return JWT.create()
@@ -29,12 +29,12 @@ public class TokenService {
                     .withClaim("Login: ", usuario.getLogin())
                     .withExpiresAt(DataExpiracao())
                     .sign(algoritimo);
-        } catch (JWTCreationException exception){
+        } catch (JWTCreationException exception) {
             throw new RuntimeException("Erro ao gerar TOKEN: " + exception.getMessage());
         }
     }
 
-    public String getSubject(String tokemJWT){
+    public String getSubject(String tokemJWT) {
         try {
             Algorithm algoritimo = Algorithm.HMAC256(secret);
             return JWT.require(algoritimo)
@@ -43,7 +43,7 @@ public class TokenService {
                     .verify(tokemJWT)
                     .getSubject();
 
-        } catch (JWTVerificationException exception){
+        } catch (JWTVerificationException exception) {
             throw new RuntimeException("Tokem inválido ou expirado!");
         }
     }

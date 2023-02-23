@@ -27,8 +27,11 @@ public class Paciente {
     public Paciente(PacienteDto dados){
         this.nome = dados.nome();
         this.email = dados.email();
-        this.cpf = dados.cpf();
-        this.telefone = dados.telefone();
+        this.cpf = dados.cpf().replace(".","").replace("-","");
+        this.telefone = dados.telefone().replace("(","")
+                                        .replace(")","")
+                                        .replace("-","")
+                                        .replace(" ","");
         this.endereco = new Endereco(dados.endereco());
         this.ativo = true;
     }

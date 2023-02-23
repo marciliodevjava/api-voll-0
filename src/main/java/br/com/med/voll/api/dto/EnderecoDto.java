@@ -9,7 +9,7 @@ public record EnderecoDto(
         @NotBlank(message = "Bairro está incorreto.")
         String bairro,
         @NotBlank(message = "Cep está incorreto.")
-                @Pattern(regexp = "\\d{8}")
+                @Pattern(regexp = "\\d{5}\\-?\\d{3}")
         String cep,
         @NotBlank(message = "Cidade está incorreto.")
         String cidade,

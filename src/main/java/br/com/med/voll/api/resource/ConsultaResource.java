@@ -22,7 +22,7 @@ public class ConsultaResource {
 
     @PostMapping("/marcar")
     @Transactional
-    public ResponseEntity<?> agendar(@RequestBody @Valid DadosConsultasDto dados){
+    public ResponseEntity<?> agendar(@RequestBody @Valid DadosConsultasDto dados) {
         DadosDetalhamentoConsultaDto dadosDetalhamentoConsultaDto = consultaServive.agendar(dados);
         return ResponseEntity.ok(dadosDetalhamentoConsultaDto);
     }

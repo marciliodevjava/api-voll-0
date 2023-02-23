@@ -3,18 +3,15 @@ package br.com.med.voll.api.service;
 import br.com.med.voll.api.domain.Medico;
 import br.com.med.voll.api.domain.Paciente;
 import br.com.med.voll.api.domain.consulta.Consulta;
-import br.com.med.voll.api.dto.CancelamentoConsutaDto;
-import br.com.med.voll.api.dto.CancelamentoDetalheConsutaDto;
-import br.com.med.voll.api.dto.DadosConsultasDto;
-import br.com.med.voll.api.dto.DadosDetalhamentoConsultaDto;
+import br.com.med.voll.api.dto.*;
 import br.com.med.voll.api.exception.medico.ValidacaoException;
 import br.com.med.voll.api.repository.ConsultaRespository;
 import br.com.med.voll.api.repository.MedicoRepository;
 import br.com.med.voll.api.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class ConsultaServive {
@@ -65,5 +62,10 @@ public class ConsultaServive {
         consulta.excluir(cancelamentoConsutaDto.cancelamento());
 
         return new CancelamentoDetalheConsutaDto(consulta);
+    }
+
+    public Page<ListagemConsultaDto> listaPaginada(Pageable paginacao) {
+        Page<ListagemConsultaDto> paginas = consultaRespository.findAll(paginacao).map(ListagemConsultaDto::new);
+        return paginas;
     }
 }

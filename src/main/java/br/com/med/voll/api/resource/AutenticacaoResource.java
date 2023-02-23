@@ -35,18 +35,18 @@ public class AutenticacaoResource {
     @PostMapping
     @Transactional
     @CrossOrigin
-    public ResponseEntity<TokemDadosJWT> login(@RequestBody @Valid LoginDto loginDto){
+    public ResponseEntity<TokemDadosJWT> login(@RequestBody @Valid LoginDto loginDto) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginDto.login(), loginDto.senha());
         Authentication authentication = authenticationManager.authenticate(token);
 
-        String tokemGerado = tokenService.gerarToken((Usuario)authentication.getPrincipal());
-        return ResponseEntity.ok(new TokemDadosJWT(loginDto.login(), new Date(),tokenService.DataExpiracaoTime(), tokemGerado));
+        String tokemGerado = tokenService.gerarToken((Usuario) authentication.getPrincipal());
+        return ResponseEntity.ok(new TokemDadosJWT(loginDto.login(), new Date(), tokenService.DataExpiracaoTime(), tokemGerado));
     }
 
     @PostMapping("/cadastrar")
     @Transactional
     @CrossOrigin
-    public ResponseEntity<?> cadastroUsuario(@RequestBody @Valid UsuarioCadastroDto usuarioCadastroDto){
+    public ResponseEntity<?> cadastroUsuario(@RequestBody @Valid UsuarioCadastroDto usuarioCadastroDto) {
         Usuario cadastro = usuarioRepository.save(new Usuario(usuarioCadastroDto));
         return ResponseEntity.ok().build();
     }

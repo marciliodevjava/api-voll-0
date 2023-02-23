@@ -32,7 +32,10 @@ public class Medico {
     public Medico(MedicoDto dados) {
         this.nome = dados.nome();
         this.email = dados.email();
-        this.telefone = dados.telefone();
+        this.telefone = dados.telefone().replace("(","")
+                                        .replace(")","")
+                                        .replace("-","")
+                                        .replace(" ","");
         this.crm = dados.crm();
         this.especialidade = dados.especialidade();
         this.endereco = new Endereco(dados.endereco());

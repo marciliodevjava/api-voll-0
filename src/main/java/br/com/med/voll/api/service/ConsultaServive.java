@@ -27,11 +27,11 @@ public class ConsultaServive {
     @Autowired
     private PacienteRepository pacienteRepository;
 
-    public DadosDetalhamentoConsultaDto agendar(DadosConsultasDto dados){
-        if(!medicoRepository.existsById(dados.idMedico())){
+    public DadosDetalhamentoConsultaDto agendar(DadosConsultasDto dados) {
+        if (!medicoRepository.existsById(dados.idMedico())) {
             throw new ValidacaoException("Médico informado não existe");
         }
-        if(dados.idMedico() != null && !pacienteRepository.existsById(dados.idPaciente())){
+        if (dados.idMedico() != null && !pacienteRepository.existsById(dados.idPaciente())) {
             throw new ValidacaoException("Paciente informado não existe.");
         }
         Medico medico = this.escolhaMedico(dados);
@@ -41,10 +41,11 @@ public class ConsultaServive {
                 , paciente.getId(), dados.data());
     }
 
-    private Medico escolhaMedico(DadosConsultasDto dados){
-        if(dados.idMedico() != null) return medicoRepository.getReferenceById(dados.idMedico());
+    private Medico escolhaMedico(DadosConsultasDto dados) {
+        if (dados.idMedico() != null) return medicoRepository.getReferenceById(dados.idMedico());
 
-        if(dados.especialidade() == null) throw new ValidacaoException("Especialidade é obrigatória, quando o medico não for escolhido.");
+        if (dados.especialidade() == null)
+            throw new ValidacaoException("Especialidade é obrigatória, quando o medico não for escolhido.");
 
         return medicoRepository.escolherMedicoAlatorio(dados.especialidade(), dados.data());
     }

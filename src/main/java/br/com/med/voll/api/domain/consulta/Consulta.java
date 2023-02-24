@@ -33,7 +33,8 @@ public class Consulta {
     @Enumerated(EnumType.STRING)
     private MotivoAgendamentoOuCancelamentoEnum status = MotivoAgendamentoOuCancelamentoEnum.CONSULTA_MARCADA;
 
-    public Consulta(Long idMedico, Long idPaciente, LocalDateTime data){
+    public Consulta(Long id, Long idMedico, Long idPaciente, LocalDateTime data){
+        this.id = id;
         this.medico = new Medico(idMedico);
         this.paciente = new Paciente(idPaciente);
         this.data = data;

@@ -29,4 +29,7 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
              limit 1
             """)
     Medico escolherMedicoAlatorio(Especialidade especialidade, LocalDateTime data);
+
+    @Query("SELECT m.ativo FROM medico m WHERE m.id = ?1")
+    Boolean verificaMedicoAtivo(Long idMedico);
 }

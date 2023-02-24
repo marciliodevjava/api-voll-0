@@ -8,10 +8,13 @@ import br.com.med.voll.api.exception.medico.ValidacaoException;
 import br.com.med.voll.api.repository.ConsultaRespository;
 import br.com.med.voll.api.repository.MedicoRepository;
 import br.com.med.voll.api.repository.PacienteRepository;
+import br.com.med.voll.api.util.validacoes.ValidadorAgendamentoDeConsulta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ConsultaServive {
@@ -25,6 +28,9 @@ public class ConsultaServive {
     @Autowired
     private PacienteRepository pacienteRepository;
 
+    @Autowired
+    private List<ValidadorAgendamentoDeConsulta> validadores;
+
     public DadosDetalhamentoConsultaDto agendar(DadosConsultasDto dados) {
         if (!medicoRepository.existsById(dados.idMedico())) {
             throw new ValidacaoException("Médico informado não existe");
@@ -32,11 +38,16 @@ public class ConsultaServive {
         if (dados.idMedico() != null && !pacienteRepository.existsById(dados.idPaciente())) {
             throw new ValidacaoException("Paciente informado não existe.");
         }
+
+        validadores.forEach(v -> v.validar(dados));
+
         Medico medico = this.escolhaMedico(dados);
         Paciente paciente = pacienteRepository.getReferenceById(dados.idPaciente());
-        Consulta consulta = consultaRespository.save(new Consulta(medico.getId(), paciente.getId(), dados.data()));
-        return new DadosDetalhamentoConsultaDto(consulta.getId(), medico.getId()
-                , paciente.getId(), dados.data());
+        Consulta consulta = new Consulta(null, medico.getId(), paciente.getId(), dados.data());
+
+        Consulta result = consultaRespository.save(consulta);
+        return new DadosDetalhamentoConsultaDto(result.getId(), result.getId()
+                , result.getId(), result.getData());
     }
 
     private Medico escolhaMedico(DadosConsultasDto dados) {

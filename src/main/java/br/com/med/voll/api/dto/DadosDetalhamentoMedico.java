@@ -3,7 +3,6 @@ package br.com.med.voll.api.dto;
 import br.com.med.voll.api.domain.Endereco;
 import br.com.med.voll.api.domain.Especialidade;
 import br.com.med.voll.api.domain.Medico;
-import jakarta.validation.constraints.Pattern;
 
 public record DadosDetalhamentoMedico(Long id,
                                       String nome,

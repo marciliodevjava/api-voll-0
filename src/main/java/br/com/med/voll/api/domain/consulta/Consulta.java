@@ -3,7 +3,6 @@ package br.com.med.voll.api.domain.consulta;
 import br.com.med.voll.api.domain.Medico;
 import br.com.med.voll.api.domain.MotivoAgendamentoOuCancelamentoEnum;
 import br.com.med.voll.api.domain.Paciente;
-import br.com.med.voll.api.dto.CancelamentoDetalheConsutaDto;
 import br.com.med.voll.api.exception.medico.ValidacaoException;
 import jakarta.persistence.*;
 import lombok.*;

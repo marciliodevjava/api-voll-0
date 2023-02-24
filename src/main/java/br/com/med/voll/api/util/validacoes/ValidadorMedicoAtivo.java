@@ -1,13 +1,10 @@
 package br.com.med.voll.api.util.validacoes;
 
-import br.com.med.voll.api.domain.Medico;
 import br.com.med.voll.api.dto.DadosConsultasDto;
 import br.com.med.voll.api.exception.medico.ValidacaoException;
 import br.com.med.voll.api.repository.MedicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 @Component
 public class ValidadorMedicoAtivo implements ValidadorAgendamentoDeConsulta {

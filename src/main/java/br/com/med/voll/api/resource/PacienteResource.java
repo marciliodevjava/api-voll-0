@@ -4,7 +4,6 @@ import br.com.med.voll.api.domain.Paciente;
 import br.com.med.voll.api.dto.PacienteDto;
 import br.com.med.voll.api.dto.PacienteRetornoCriadoDto;
 import br.com.med.voll.api.dto.PacienteRetornoDto;
-import br.com.med.voll.api.repository.MedicoRepository;
 import br.com.med.voll.api.repository.PacienteRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +25,6 @@ public class PacienteResource {
     private Paciente paciente;
     @Autowired
     private PacienteRepository pacienteRepository;
-    @Autowired
-    private MedicoRepository medicoRepository;
 
     @PostMapping
     @CrossOrigin

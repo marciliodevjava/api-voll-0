@@ -1,8 +1,6 @@
 package br.com.med.voll.api.resource;
 
-import br.com.med.voll.api.domain.consulta.Consulta;
 import br.com.med.voll.api.dto.*;
-import br.com.med.voll.api.repository.ConsultaRespository;
 import br.com.med.voll.api.service.ConsultaServive;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

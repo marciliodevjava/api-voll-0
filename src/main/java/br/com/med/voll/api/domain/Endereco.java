@@ -2,11 +2,9 @@ package br.com.med.voll.api.domain;
 
 import br.com.med.voll.api.dto.EnderecoDto;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.Embedded;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Embeddable
 @NoArgsConstructor

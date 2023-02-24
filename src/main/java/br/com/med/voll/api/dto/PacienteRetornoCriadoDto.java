@@ -2,7 +2,6 @@ package br.com.med.voll.api.dto;
 
 import br.com.med.voll.api.domain.Endereco;
 import br.com.med.voll.api.domain.Paciente;
-import jakarta.validation.constraints.Pattern;
 
 public record PacienteRetornoCriadoDto(Long id, String nome, String email, String telefone,String cpf, Endereco endereco) {
 

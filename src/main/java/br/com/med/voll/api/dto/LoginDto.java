@@ -1,6 +1,5 @@
 package br.com.med.voll.api.dto;
 
-import br.com.med.voll.api.domain.usuario.Usuario;
 import jakarta.validation.constraints.NotNull;
 
 public record LoginDto(

@@ -1,7 +1,6 @@
 package br.com.med.voll.api.resource;
 
 import br.com.med.voll.api.domain.Medico;
-import br.com.med.voll.api.domain.Paciente;
 import br.com.med.voll.api.dto.*;
 import br.com.med.voll.api.repository.MedicoRepository;
 import jakarta.validation.Valid;

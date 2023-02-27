@@ -18,7 +18,7 @@ public class ValidadorPacienteSemOutraConsultaNoDia implements ValidadorAgendame
 
         LocalDateTime primeiroHorario = dadosConsultasDto.data().withHour(7);
         LocalDateTime ultimoHorario = dadosConsultasDto.data().withHour(18);
-        var pacientePossuiOutraConsulta = consultaRespository.existsByPacienteIdAndDataBetween(dadosConsultasDto.idPaciente(),
+        Boolean pacientePossuiOutraConsulta = consultaRespository.existsByPacienteIdAndDataBetween(dadosConsultasDto.idPaciente(),
                 primeiroHorario,
                 ultimoHorario);
         if (pacientePossuiOutraConsulta) {

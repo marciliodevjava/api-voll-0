@@ -5,6 +5,8 @@ import br.com.med.voll.api.dto.PacienteDto;
 import br.com.med.voll.api.dto.PacienteRetornoCriadoDto;
 import br.com.med.voll.api.dto.PacienteRetornoDto;
 import br.com.med.voll.api.repository.PacienteRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +21,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("paciente")
+@SecurityRequirement(name = "bearer-key")
 public class PacienteResource {
 
     private URI uri;
@@ -37,7 +40,7 @@ public class PacienteResource {
 
     @GetMapping("/listar")
     @CrossOrigin
-    public ResponseEntity<Page<PacienteRetornoDto>> listPaciente(@PageableDefault(size = 10, page = 0, sort = "name") Pageable paginacao) {
+    public ResponseEntity<Page<PacienteRetornoDto>> listPaciente(@PageableDefault(size = 10, sort = "nome", page = 0) Pageable paginacao) {
         Page<PacienteRetornoDto> dados = pacienteRepository.findAllByAtivoTrue(paginacao).map(PacienteRetornoDto::new);
         return ResponseEntity.ok(dados);
     }

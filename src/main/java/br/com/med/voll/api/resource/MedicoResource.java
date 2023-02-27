@@ -3,6 +3,7 @@ package br.com.med.voll.api.resource;
 import br.com.med.voll.api.domain.Medico;
 import br.com.med.voll.api.dto.*;
 import br.com.med.voll.api.repository.MedicoRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("medico")
+@SecurityRequirement(name = "bearer-key")
 public class MedicoResource {
 
     private URI uri;

@@ -11,6 +11,9 @@ import org.springframework.stereotype.Repository;
 public interface PacienteRepository extends JpaRepository<Paciente, Long> {
     Page<Paciente> findAllByAtivoTrue(Pageable paginacao);
 
-    @Query("select p.ativo from paciente p where p.id = ?1")
+    @Query("""
+    select p.ativo
+    from paciente p
+    where p.id = :idPaciente""")
     Boolean findAtivoById(Long idPaciente);
 }

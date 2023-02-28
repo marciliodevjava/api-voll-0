@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 @Embeddable
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 public class Endereco {
 
@@ -28,6 +27,26 @@ public class Endereco {
         this.numero = endereco.numero();
         this.cidade = endereco.cidade();
         this.uf = endereco.uf();
+    }
+
+    public Endereco(String logradouro, String bairro, String cep, String complemento, String numero, String cidade, String uf) {
+        this.logradouro = logradouro;
+        this.bairro = bairro;
+        this.cep = cep;
+        this.complemento = complemento;
+        this.numero = numero;
+        this.cidade = cidade;
+        this.uf = uf;
+    }
+
+    public Endereco(Endereco endereco) {
+        this.logradouro = logradouro;
+        this.bairro = bairro;
+        this.cep = cep;
+        this.complemento = complemento;
+        this.numero = numero;
+        this.cidade = cidade;
+        this.uf = uf;
     }
 
     public void atualizarInformacoes(Endereco endereco) {

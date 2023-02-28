@@ -36,6 +36,15 @@ public class Paciente {
         this.ativo = true;
     }
 
+    public Paciente(String nome, String email, String cpf, String telefone, Endereco endereco){
+        this.nome = nome;
+        this.email = email;
+        this.cpf = cpf;
+        this.telefone = telefone;
+        this.endereco = new Endereco(endereco);
+        this.ativo = true;
+    }
+
     public Paciente(Long id){
         this.id = id;
     }

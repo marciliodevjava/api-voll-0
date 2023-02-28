@@ -50,7 +50,7 @@ class MedicoRepositoryTest {
         Endereco enderecoCadastroMedico = new Endereco("Rua 1", "Santa Lucia", "71815460"
                                                        , "Casa Branca", "2", "Jardins do Fotro", "JF");
         Medico medicoCadastro = new Medico("Patrick afonso padilha", "patrick-afonso@teste.com.br", "61983625689"
-                                           , "362956", Especialidade.GINECOLOGIA, enderecoCadastroMedico);
+                                           , "362956", Especialidade.CARDIOLOGIA, enderecoCadastroMedico);
         Endereco enderecoCadastroPaciente = new Endereco("Rua 2", "Candagoandia", "72725460"
                 , "Casa Amarela", "12", "Brasilia", "DF");
         Paciente pacienteCadastro = new Paciente("Luiza Alessandra", "luiza-ale@teste.com.br", "05046259877"
@@ -60,14 +60,6 @@ class MedicoRepositoryTest {
         Medico medicoLivre = medicoRepository.escolherMedicoAlatorio(Especialidade.CARDIOLOGIA, proximaSegundaAsDez);
 
         assertThat(medicoLivre).isNull();
-    }
-
-    @Test
-    @DisplayName("Deve Devolver True quando o médico não está disponivel na data")
-    void escolherMedicoAlatorioCenarioDois() {
-    }
-    @Test
-    void verificaMedicoAtivo() {
     }
 
 }

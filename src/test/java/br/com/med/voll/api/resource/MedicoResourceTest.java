@@ -40,9 +40,17 @@ class MedicoResourceTest {
     @Test
     @DisplayName("Testando endpoint cadastar medico - Devolve código HTTP - 400")
     @WithMockUser
-    void cadastrar() throws Exception{
+    public void cadastrar400() throws Exception{
         MockHttpServletResponse response = mockMvc.perform(post("/medico/cadastro")).andReturn().getResponse();
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    @DisplayName("Testando endpoint cadastrar medico - Devolve codigo HTTP 403")
+    public void cadastrar403() throws Exception {
+        MockHttpServletResponse response = mockMvc.perform(post("/medico/cadastro")).andReturn().getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.FORBIDDEN.value());
     }
 }

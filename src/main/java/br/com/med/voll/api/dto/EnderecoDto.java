@@ -1,5 +1,6 @@
 package br.com.med.voll.api.dto;
 
+import br.com.med.voll.api.domain.Endereco;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
@@ -17,4 +18,7 @@ public record EnderecoDto(
         String uf,
         String numero,
         String complemento) {
+        public EnderecoDto(Endereco endereco) {
+                this(endereco.getLogradouro(), endereco.getBairro(), endereco.getCep(), endereco.getCidade(), endereco.getUf(), endereco.getNumero(), endereco.getComplemento());
+        }
 }
